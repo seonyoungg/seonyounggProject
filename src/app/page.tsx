@@ -3,56 +3,19 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Sun, Moon } from 'lucide-react';
-import Image from 'next/image';
 
 export default function Home() {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-  const [runIconFrame, setRunIconFrame] = useState(1);
 
   useEffect(() => {
-    // 달리는 아이콘 애니메이션 (run_icon2 폴더)
-    const iconInterval = setInterval(() => {
-      setRunIconFrame((prev) => {
-        const next = prev + 1;
-        return next > 7 ? 1 : next;
-      });
-    }, 200);
-
-    // 로딩 완료
-    const loadingTimer = setTimeout(() => setIsLoading(false), 4000);
-
-    return () => {
-      clearInterval(iconInterval);
-      clearTimeout(loadingTimer);
-    };
+    setTimeout(() => setIsLoading(false), 1500);
   }, []);
 
   if (isLoading) {
     return (
-      <div className='fixed inset-0 z-50 overflow-hidden'>
-        {/* 로딩 페이지 오버레이 */}
-        <div className='absolute inset-0 bg-white bg-opacity-30 flex flex-col items-center justify-center'>
-          {/* 달리는 아이콘 (run_icon2 폴더의 이미지들) */}
-          <div className='mb-8'>
-            <Image width={300} height={300} src={`/img/run_icon2/${runIconFrame}.png`} alt='running character' className='w-100 h-100 object-contain' />
-          </div>
-
-          {/* 추가 효과들 */}
-          <div className='absolute bottom-10 left-1/2 transform -translate-x-1/2 bg-black'>
-            <motion.div
-              animate={{
-                opacity: [0.7, 1, 0.7],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-              }}
-              className='text-white text-lg font-semibold'>
-              잠시만 기다려주세요 🏃‍♀️
-            </motion.div>
-          </div>
-        </div>
+      <div className={`flex justify-center items-center h-screen transition-colors duration-300 ${darkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
+        <p className='text-2xl animate-pulse'>Loading portfolio...</p>
       </div>
     );
   }
