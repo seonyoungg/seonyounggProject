@@ -1,103 +1,146 @@
-import Image from "next/image";
+'use client';
+
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import { Sun, Moon } from 'lucide-react';
+import Image from 'next/image';
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [darkMode, setDarkMode] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [runIconFrame, setRunIconFrame] = useState(1);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    // 달리는 아이콘 애니메이션 (run_icon2 폴더)
+    const iconInterval = setInterval(() => {
+      setRunIconFrame((prev) => {
+        const next = prev + 1;
+        return next > 7 ? 1 : next;
+      });
+    }, 200);
+
+    // 로딩 완료
+    const loadingTimer = setTimeout(() => setIsLoading(false), 4000);
+
+    return () => {
+      clearInterval(iconInterval);
+      clearTimeout(loadingTimer);
+    };
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className='fixed inset-0 z-50 overflow-hidden'>
+        {/* 로딩 페이지 오버레이 */}
+        <div className='absolute inset-0 bg-white bg-opacity-30 flex flex-col items-center justify-center'>
+          {/* 달리는 아이콘 (run_icon2 폴더의 이미지들) */}
+          <div className='mb-8'>
+            <Image width={300} height={300} src={`/img/run_icon2/${runIconFrame}.png`} alt='running character' className='w-100 h-100 object-contain' />
+          </div>
+
+          {/* 추가 효과들 */}
+          <div className='absolute bottom-10 left-1/2 transform -translate-x-1/2 bg-black'>
+            <motion.div
+              animate={{
+                opacity: [0.7, 1, 0.7],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+              }}
+              className='text-white text-lg font-semibold'>
+              잠시만 기다려주세요 🏃‍♀️
+            </motion.div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </div>
+    );
+  }
+
+  return (
+    <main className={`transition-colors duration-300 ${darkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
+      <div className='fixed top-4 right-4 z-50'>
+        <button onClick={() => setDarkMode(!darkMode)} className={`p-2 rounded-full border transition-colors ${darkMode ? 'border-gray-700 bg-gray-800 text-white' : 'border-gray-300 bg-white text-black'}`}>
+          {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+        </button>
+      </div>
+
+      {/* Hero */}
+      <section className='h-screen flex flex-col justify-center items-center text-center px-4'>
+        <motion.h1 initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className='text-5xl font-bold mb-4'>
+          안녕하세요, 선영입니다.
+        </motion.h1>
+        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.6 }} className={`text-xl mb-6 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+          프론트엔드 개발자 포트폴리오입니다.
+        </motion.p>
+        <motion.a href='#projects' className={`px-6 py-3 rounded-full hover:opacity-80 transition ${darkMode ? 'bg-white text-black' : 'bg-black text-white'}`} whileHover={{ scale: 1.05 }}>
+          포트폴리오 보러가기
+        </motion.a>
+      </section>
+
+      {/* About */}
+      <section id='about' className='py-20 px-6 max-w-4xl mx-auto'>
+        <motion.h2 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.6 }} className='text-3xl font-bold mb-4'>
+          👩‍💻 About Me
+        </motion.h2>
+        <p className='text-lg leading-relaxed'>사용자 경험을 중요하게 생각하는 프론트엔드 개발자입니다. 협업과 소통을 바탕으로 안정적인 UI와 재사용 가능한 컴포넌트를 만들고자 노력합니다.</p>
+      </section>
+
+      {/* Skills */}
+      <section id='skills' className={`py-20 px-6 ${darkMode ? 'bg-gray-900' : 'bg-gray-100'}`}>
+        <h2 className='text-3xl font-bold mb-8 text-center'>🛠 Skills</h2>
+        <div className='grid grid-cols-2 sm:grid-cols-3 gap-6 text-center'>
+          {['HTML/CSS', 'JavaScript', 'TypeScript', 'React', 'Next.js', 'Tailwind CSS'].map((skill) => (
+            <motion.div key={skill} whileInView={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: 20 }} transition={{ duration: 0.5 }} className={`px-4 py-2 rounded shadow ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+              {skill}
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Projects */}
+      <section id='projects' className='py-20 px-6 max-w-5xl mx-auto'>
+        <h2 className='text-3xl font-bold mb-8 text-center'>📁 Projects</h2>
+        <div className='grid md:grid-cols-2 gap-8'>
+          {[
+            {
+              title: '감정 기반 음악 추천 웹앱',
+              desc: '감정 점수 기반으로 유튜브 음악을 추천하는 프로젝트입니다.',
+              link: '#',
+            },
+            {
+              title: '여행 기록 웹앱',
+              desc: '일정, 별점, 태그, 사진을 입력할 수 있는 여행 기록 플랫폼입니다.',
+              link: '#',
+            },
+          ].map((proj) => (
+            <motion.div key={proj.title} whileInView={{ opacity: 1, scale: 1 }} initial={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.4 }} className={`border rounded-lg p-4 shadow hover:shadow-lg transition ${darkMode ? 'border-gray-700 bg-gray-800' : 'border-gray-200 bg-white'}`}>
+              <h3 className='text-xl font-semibold mb-2'>🎯 {proj.title}</h3>
+              <p className={`mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>{proj.desc}</p>
+              <a href={proj.link} className={`hover:underline ${darkMode ? 'text-blue-400' : 'text-blue-600'}`}>
+                🔗 자세히 보기
+              </a>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Contact */}
+      <section id='contact' className={`py-20 px-6 text-center ${darkMode ? 'bg-gray-900' : 'bg-gray-100'}`}>
+        <h2 className='text-3xl font-bold mb-4'>📬 Contact</h2>
+        <p className='text-lg mb-2'>
+          이메일:{' '}
+          <a href='mailto:example@email.com' className={`${darkMode ? 'text-blue-400' : 'text-blue-600'}`}>
+            example@email.com
+          </a>
+        </p>
+        <p className='text-lg'>
+          GitHub:{' '}
+          <a href='https://github.com/your-github' target='_blank' className={`${darkMode ? 'text-blue-400' : 'text-blue-600'}`}>
+            github.com/your-github
+          </a>
+        </p>
+      </section>
+    </main>
   );
 }
