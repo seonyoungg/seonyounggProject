@@ -23,3 +23,30 @@ export const ProjectList: ProjectListProps[] = [
     imgUrl: '/img/project-03.png',
   },
 ];
+
+export const PublishingList = [
+  {
+    title: 'Jeep 홈페이지 리뉴얼',
+    desc: '기존 사이트 기획을 토대로 디자인을 재구성하고, 맞춤형 반응형 퍼블리싱 작업 진행',
+    imgUrl: '/img/publish-01.png',
+    link: 'https://www.ssamsweb.com/240125/psy/_jeep/',
+  },
+  {
+    title: 'Happycall 홈페이지 리뉴얼',
+    desc: '기존 사이트 기획을 토대로 디자인을 재구성하고, 맞춤형 반응형 퍼블리싱 작업 진행',
+    imgUrl: '/img/publish-02.png',
+    link: 'https://www.ssamsweb.com/240125/psy/_happycall/',
+  },
+  {
+    title: '어린이급식센터 홈페이지 리뉴얼',
+    desc: '기존 사이트 기획을 토대로 디자인을 재구성하고, 맞춤형 반응형 퍼블리싱 작업 진행',
+    imgUrl: '/img/publish-03.png',
+    link: 'https://www.ssamsweb.com/240125/psy/_center/',
+  },
+  {
+    title: 'Snoopy 이벤트 페이지',
+    desc: '디자인 시안 신규 제작, 이벤트성 단일 페이지 퍼블리싱 및 가벼운 인터랙션 구현',
+    imgUrl: '/img/publish-04.png',
+    link: 'https://www.ssamsweb.com/240125/psy/_snoopy/',
+  },
+];

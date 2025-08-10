@@ -7,6 +7,6 @@ export interface ProjectListProps {
   title: string;
   desc: string;
   link: string;
-  link2: string;
+  link2?: string;
   imgUrl: string;
 }
