@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Sun, Moon, Github, LinkIcon, Mail, BookCheck } from 'lucide-react';
 import { IconList } from '@/lib/data/imgList';
@@ -10,19 +10,6 @@ import Link from 'next/link';
 
 export default function Home() {
   const [darkMode, setDarkMode] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => setIsLoading(false), 1500);
-  }, []);
-
-  if (isLoading) {
-    return (
-      <div className={`flex justify-center items-center h-screen transition-colors duration-300 ${darkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
-        <p className='text-2xl animate-pulse'>Loading...</p>
-      </div>
-    );
-  }
 
   return (
     <main className={`transition-colors duration-300 ${darkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
