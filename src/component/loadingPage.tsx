@@ -2,6 +2,8 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Button from '@/component/ui/btn';
+import { div } from 'framer-motion/client';
+import LoadingLottie from '@/component/home/loadingLottie';
 
 function RunAnimation() {
   const [frame, setFrame] = useState(1);
@@ -26,47 +28,45 @@ function RunAnimation() {
 }
 
 function IntroScreen({ onFinish }: { onFinish: () => void }) {
-  useEffect(() => {
-    const timer = setTimeout(onFinish, 6000);
-    return () => clearTimeout(timer);
-  }, [onFinish]);
-
   return (
     <div className='flex flex-col gap-4 items-center justify-center w-full h-full bg-white'>
-      {/* 러닝 애니메이션 추가 */}
+      {/* 러닝 애니메이션 */}
       <RunAnimation />
 
-      <Button size='lg'>START</Button>
+      <p className='text-2xl lg:text-3xl font-medium'>ARE YOU READY?</p>
+      <Button size='lg' onClick={onFinish}>
+        START
+      </Button>
     </div>
   );
 }
 
 export default function LoadingPage({ children }: { children: React.ReactNode }) {
   const [showIntro, setShowIntro] = useState<boolean | null>(null);
-  const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
-    setIsHydrated(true);
-
     const loadingSeen = sessionStorage.getItem('loadingSeen');
 
-    if (loadingSeen === null) {
+    if (!loadingSeen) {
       setShowIntro(true);
     } else {
       setShowIntro(false);
     }
   }, []);
 
-  if (!isHydrated || showIntro === null) {
-    return <div className='h-screen'></div>;
+  if (showIntro === null) {
+    return (
+      <div className='w-full h-full flex justify-center items-center'>
+        <LoadingLottie />
+      </div>
+    );
   }
-
   if (showIntro) {
     return (
       <IntroScreen
         onFinish={() => {
-          // setShowIntro(false);
-          // sessionStorage.setItem('loadingSeen', 'true');
+          setShowIntro(false);
+          sessionStorage.setItem('loadingSeen', 'true');
         }}
       />
     );
