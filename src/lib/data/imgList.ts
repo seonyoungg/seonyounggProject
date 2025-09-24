@@ -18,10 +18,6 @@ export const IconList: ImgListProps[] = [
     imgUrl: 'img/icon/JavaScript.svg',
   },
   {
-    title: 'JQuery',
-    imgUrl: 'img/icon/JQuery.svg',
-  },
-  {
     title: 'TypeScript',
     imgUrl: 'img/icon/TypeScript.svg',
   },
@@ -32,6 +28,10 @@ export const IconList: ImgListProps[] = [
   {
     title: 'NextJS',
     imgUrl: 'img/icon/NextJS-Dark.svg',
+  },
+  {
+    title: 'JQuery',
+    imgUrl: 'img/icon/JQuery.svg',
   },
   {
     title: 'Figma',
