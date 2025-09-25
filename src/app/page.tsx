@@ -21,9 +21,9 @@ export default function Home() {
 
       {/* Introduce */}
       <section className='h-screen flex flex-col gap-3 justify-center items-center text-center px-4'>
-        <motion.h1 initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className='text-5xl font-bold mb-4 flex flex-col md:flex-row gap-y-1 gap-x-1'>
+        <motion.h1 initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className='text-5xl font-bold mb-4 flex flex-col md:flex-row gap-y-3 md:gap-x-2 md:gap-y-0'>
           <span>안녕하세요</span>
-          <span>선영입니다.</span>
+          <span>박선영입니다.</span>
         </motion.h1>
         <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.6 }} className={`break-keep text-lg mb-6 ${darkMode ? 'text-gray-300' : 'text-gray-600'} flex flex-col gap-2 leading-relaxed`}>
           <span>사용자 경험을 중시하는 프론트엔드 개발자입니다.</span>
